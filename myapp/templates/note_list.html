@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="note-list-container">
+  <a class="btn note-adding" href="{% url 'note_add' %}">Add Note</a>
+   <h1 class="list-head">Notes</h1>
+</div>
+<div class="lists">
+  <ul>
+    {% for note in object_list %}
+    <div class="list-item">
+      <li>
+        <h2>Title: {{ note.title }}</h2>
+        <p>{{ note.content }}</p>
+        <p p>Created at: {{ note.created_at|date:"l , d F Y" }}</p>
+        <!-- <p style="color: gray; font-size: 0.8rem;">
+             (Belongs to: {{ note.user.username }})
+          </p> -->
+
+        <a class="btn note-edit" href="{% url 'note_edit' note.pk %}">Edit</a>
+       <button class="btn note-delete" onclick="openPopup('{{ note.pk }}')">Delete</button>
+      </li>
+    </div>
+    {% empty %}
+      <li>No notes available.</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- 🔹 Custom Popup HTML -->
+<div id="popup" class="popup-overlay">
+  <div class="popup-content">
+    <h3>Delete Confirmation</h3>
+    <p>Are you sure you want to delete this note?</p>
+    <div class="popup-buttons">
+      <button class="btn cancel" onclick="closePopup()">Cancel</button>
+      <button class="btn delete" id="confirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 JavaScript for Popup -->
+<script>
+  let selectedNoteId = null;
+
+  function openPopup(noteId) {
+    selectedNoteId = noteId;
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  function closePopup() {
+    document.getElementById("popup").style.display = "none";
+  }
+
+  document.getElementById("confirmDelete").addEventListener("click", function () {
+    if (selectedNoteId) {
+      window.location.href = `/note/${selectedNoteId}/delete/`;
+    }
+  });
+</script>
+
+{% endblock %}
+</div>

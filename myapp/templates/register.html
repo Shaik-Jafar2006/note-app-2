@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1 class="register-head">Register</h1>
+
+  <div class="register-form">
+    <form method="post">
+      {% csrf_token %}
+
+      <!-- 🔴 Show any non-field errors (like password mismatch) -->
+      {% if form.non_field_errors %}
+        <div class="error">
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- 🔹 Username Field -->
+      <div class="form-group">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        <small class="form-hint">{{ form.username.help_text }}</small>
+        {% for error in form.username.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <!-- 🔹 Email Field -->
+      <div class="form-group">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {% for error in form.email.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <!-- 🔹 Password1 Field -->
+      <div class="form-group">
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        {% for error in form.password1.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <!-- 🔹 Password2 Field -->
+      <div class="form-group">
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        {% for error in form.password2.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+      </div>
+
+      <button class="register-submit-btn" type="submit">Register</button>
+    </form>
+  </div>
+
+  <p class="login-para">
+    Already have an account?
+    <a class="reg-url" href="{% url 'login' %}">Login</a>
+  </p>
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const usernameInput = document.getElementById("id_username");
+    const warning = document.createElement("div");
+    warning.style.color = "red";
+    warning.style.fontSize = "14px";
+    warning.style.marginTop = "5px";
+    usernameInput.parentNode.appendChild(warning);
+
+    usernameInput.addEventListener("input", function() {
+        const value = usernameInput.value;
+        const regex = /[-_$@!]/;
+
+        if (value && !regex.test(value)) {
+            warning.textContent = "⚠️ Use at least one symbol: - _ $ @ !";
+        } else {
+            warning.textContent = "";
+        }
+    });
+});
+</script>
+{% endblock %}

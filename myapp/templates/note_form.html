@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="add-note-page">
+  <h1 class="form-head">{{ title }}</h1>
+  <div class="form-des">
+  <form class="form-forms" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn form-submit-btn" type="submit">{{ button_text }}</button>
+  </form>
+  </div>
+</div>
+{% endblock %}

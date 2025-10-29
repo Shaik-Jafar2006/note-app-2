@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container">
+  <h1 class="login-head">Login</h1>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- ✅ Show error message here -->
+    {% if form.non_field_errors %}
+      <div class="alert error-alert">
+        {% for error in form.non_field_errors %}
+          <p class="error-para">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="form-group">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+
+    <div class="form-group">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+    </div>
+
+    <button class="login-submit-btn" type="submit">Login</button>
+  </form>
+</div>
+
+<p class="login-para">
+  Don't have an account? 
+  <a class="reg-url" href="{% url 'register' %}">Register</a>
+</p>
+{% endblock %}
