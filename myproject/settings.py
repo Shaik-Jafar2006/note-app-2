@@ -72,13 +72,19 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # --------------------------------------------
 # DATABASE CONFIGURATION
 # --------------------------------------------
-DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://note_app_db_a7pe_user:UWFRku2QCDsmdFMW0l8a7lKFOfW1OOl6@dpg-d41f87q4d50c73enisrg-a/note_app_db_a7pe',
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # --------------------------------------------
 # PASSWORD VALIDATORS
