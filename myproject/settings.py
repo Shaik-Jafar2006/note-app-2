@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # --------------------------------------------
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
+        default='postgresql://note_app_db_a7pe_user:UWFRku2QCDsmdFMW0l8a7lKFOfW1OOl6@dpg-d41f87q4d50c73enisrg-a/note_app_db_a7pe',
         conn_max_age=600,
         ssl_require=True
     )
