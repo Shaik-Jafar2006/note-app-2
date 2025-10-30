@@ -23,7 +23,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # ✅ Remove duplicate ALLOWED_HOSTS — keep only this one
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'note-app.onrender.com').split(' ')
+ALLOWED_HOSTS = ['note-app-2-ks02.onrender.com', 'localhost', '127.0.0.1']
 
 # --------------------------------------------
 # APPLICATION DEFINITION
